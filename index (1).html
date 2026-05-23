@@ -1,0 +1,407 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Moon Princess 🌙</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cinzel:wght@400;600&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --deep-navy: #020818;
+    --moonlight: #c8d8f0;
+    --silver: #e8f0ff;
+    --gold: #f0d080;
+    --soft-blue: #4a7fc1;
+    --glow: #7ab3f5;
+    --rose: #f080a0;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--deep-navy); color:var(--silver); font-family:'Cormorant Garamond',serif; overflow-x:hidden; }
+
+  #stars-canvas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; }
+
+  .section { position:relative; z-index:1; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:60px 20px; }
+
+  #birthday { background:radial-gradient(ellipse at 50% 30%,#0d1f4a 0%,var(--deep-navy) 70%); }
+  #message  { background:radial-gradient(ellipse at 50% 60%,#071535 0%,var(--deep-navy) 75%); }
+  #teaser   { background:radial-gradient(ellipse at 50% 50%,#0d1030 0%,var(--deep-navy) 70%); }
+
+  .moon { width:160px; height:160px; border-radius:50%; background:radial-gradient(circle at 35% 35%,#fffbe0,#f0d880 40%,#c8a820 100%); box-shadow:0 0 40px 15px rgba(240,216,128,0.3),0 0 80px 30px rgba(240,216,128,0.15); animation:moonFloat 6s ease-in-out infinite; margin-bottom:40px; position:relative; }
+  .moon::before { content:''; position:absolute; width:30px; height:30px; border-radius:50%; background:rgba(180,140,10,0.3); top:25px; left:45px; }
+  .moon::after  { content:''; position:absolute; width:18px; height:18px; border-radius:50%; background:rgba(180,140,10,0.2); top:70px; left:90px; }
+  @keyframes moonFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-18px)} }
+
+  .birthday-title { font-family:'Cinzel',serif; font-size:clamp(1.2rem,4vw,2rem); color:var(--gold); letter-spacing:0.3em; text-transform:uppercase; margin-bottom:10px; text-align:center; animation:fadeUp 1s ease 0.3s both; }
+  .princess-name  { font-family:'Dancing Script',cursive; font-size:clamp(3rem,12vw,7rem); color:var(--moonlight); text-shadow:0 0 20px rgba(200,216,240,0.8),0 0 60px rgba(122,179,245,0.4); animation:fadeUp 1s ease 0.6s both; text-align:center; line-height:1; }
+  .birthday-sub   { font-style:italic; font-size:clamp(1rem,3vw,1.4rem); color:var(--glow); margin-top:20px; letter-spacing:0.15em; animation:fadeUp 1s ease 0.9s both; text-align:center; }
+  .birthday-date  { font-family:'Cinzel',serif; font-size:clamp(0.9rem,2.5vw,1.1rem); color:var(--gold); margin-top:14px; letter-spacing:0.25em; animation:fadeUp 1s ease 1.1s both; opacity:0.85; }
+  .scroll-hint    { margin-top:50px; font-size:0.85rem; color:var(--soft-blue); letter-spacing:0.2em; animation:fadeUp 1s ease 1.4s both,bounce 2s ease-in-out 2.5s infinite; text-align:center; }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)} }
+
+  .message-box { max-width:680px; text-align:center; padding:20px; }
+  .message-icon { font-size:3rem; margin-bottom:24px; animation:heartbeat 2s ease-in-out infinite; }
+  @keyframes heartbeat { 0%,100%{transform:scale(1)} 14%{transform:scale(1.15)} 28%{transform:scale(1)} 42%{transform:scale(1.1)} 56%{transform:scale(1)} }
+  .message-heading { font-family:'Dancing Script',cursive; font-size:clamp(2rem,7vw,3.5rem); color:var(--rose); text-shadow:0 0 20px rgba(240,128,160,0.5); margin-bottom:30px; }
+  .message-para  { font-size:clamp(1.05rem,2.5vw,1.25rem); line-height:2; color:var(--moonlight); margin-bottom:20px; font-style:italic; opacity:0.92; }
+  .message-tamil { font-size:clamp(1rem,2.5vw,1.15rem); color:var(--glow); line-height:2.1; margin-bottom:20px; opacity:0.9; font-style:italic; }
+  .divider { width:120px; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:30px auto; }
+
+  .teaser-box { max-width:640px; text-align:center; padding:20px; }
+  .teaser-icon { font-size:3.5rem; margin-bottom:24px; animation:float 3s ease-in-out infinite; }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+  .teaser-title { font-family:'Dancing Script',cursive; font-size:clamp(2rem,7vw,3.8rem); color:var(--moonlight); text-shadow:0 0 30px rgba(200,216,240,0.5); line-height:1.4; margin-bottom:20px; }
+  .teaser-sub { font-style:italic; font-size:clamp(1rem,2.5vw,1.2rem); color:var(--glow); line-height:2; margin-bottom:10px; }
+  .teaser-tamil { font-size:clamp(1rem,2.5vw,1.15rem); color:var(--rose); line-height:2; margin-bottom:30px; font-style:italic; }
+
+  .btn-row { display:flex; gap:20px; justify-content:center; align-items:center; flex-wrap:nowrap; margin-top:40px; }
+
+  .btn-yes {
+    font-family:'Cinzel',serif; font-size:1.1rem; letter-spacing:0.15em;
+    padding:16px 48px; border:none; border-radius:50px;
+    background:linear-gradient(135deg,#4a7fc1,#2a5090); color:#fff; cursor:pointer;
+    box-shadow:0 0 20px rgba(74,127,193,0.5),0 4px 20px rgba(0,0,0,0.4);
+    transition:transform 0.2s,box-shadow 0.2s; flex-shrink:0;
+  }
+  .btn-yes:hover { transform:translateY(-3px) scale(1.04); box-shadow:0 0 35px rgba(74,127,193,0.7),0 8px 30px rgba(0,0,0,0.4); }
+
+  #noBtn {
+    font-family:'Cinzel',serif; font-size:1.1rem; letter-spacing:0.15em;
+    padding:16px 48px; border:none; border-radius:50px;
+    background:linear-gradient(135deg,#c14a6a,#901838); color:#fff; cursor:pointer;
+    box-shadow:0 0 20px rgba(193,74,106,0.5),0 4px 20px rgba(0,0,0,0.4);
+    white-space:nowrap;
+    position:fixed; z-index:9999;
+    transition:left 0.15s ease-out, top 0.15s ease-out;
+    opacity:0;
+  }
+  #noBtn:hover { box-shadow:0 0 35px rgba(193,74,106,0.7),0 8px 30px rgba(0,0,0,0.4); }
+
+  .tip-text { font-size:0.75rem; color:rgba(200,216,240,0.3); margin-top:20px; font-style:italic; }
+
+  #letterOverlay {
+    display:none; position:fixed; inset:0; z-index:10001;
+    background:radial-gradient(ellipse at 50% 30%,#0d0820,#020818);
+    flex-direction:column; align-items:center; justify-content:flex-start;
+    padding:60px 20px; overflow-y:auto;
+  }
+  #letterOverlay.show { display:flex; animation:fadeIn 1.2s ease; }
+
+  .letter-wrap {
+    max-width:660px; width:100%; text-align:center;
+    border:1px solid rgba(200,216,240,0.12); border-radius:20px;
+    background:rgba(10,20,50,0.6); padding:44px 36px;
+    box-shadow:0 0 60px rgba(122,79,193,0.15),inset 0 0 40px rgba(10,20,60,0.4);
+  }
+  .letter-moon { font-size:2.5rem; margin-bottom:16px; animation:moonFloat 5s ease-in-out infinite; }
+  .letter-from { font-family:'Cinzel',serif; font-size:0.85rem; letter-spacing:0.3em; color:var(--gold); text-transform:uppercase; margin-bottom:24px; opacity:0.8; }
+  .letter-heading { font-family:'Dancing Script',cursive; font-size:clamp(2rem,7vw,3.2rem); color:var(--rose); text-shadow:0 0 20px rgba(240,128,160,0.5); margin-bottom:28px; line-height:1.3; }
+  .letter-divider { width:100px; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:24px auto; }
+  .letter-para { font-style:italic; font-size:clamp(1rem,2.5vw,1.15rem); color:var(--moonlight); line-height:2.1; margin-bottom:18px; opacity:0.92; }
+  .letter-tamil { font-size:clamp(0.95rem,2.5vw,1.1rem); color:var(--glow); line-height:2.2; margin-bottom:18px; font-style:italic; opacity:0.9; }
+  .letter-sign { font-family:'Dancing Script',cursive; font-size:clamp(1.5rem,5vw,2.2rem); color:var(--gold); margin-top:28px; text-shadow:0 0 15px rgba(240,208,128,0.4); }
+  .letter-hearts { font-size:1.4rem; margin-top:14px; letter-spacing:0.3em; }
+  .btn-accept {
+    font-family:'Cinzel',serif; font-size:1.1rem; letter-spacing:0.15em;
+    padding:16px 52px; border:none; border-radius:50px;
+    background:linear-gradient(135deg,#4a7fc1,#2a5090); color:#fff; cursor:pointer;
+    box-shadow:0 0 25px rgba(74,127,193,0.6),0 4px 20px rgba(0,0,0,0.4);
+    margin-top:30px; animation:pulse 2.5s ease-in-out infinite;
+    transition:transform 0.2s,box-shadow 0.2s;
+  }
+  .btn-accept:hover { transform:translateY(-3px) scale(1.05); box-shadow:0 0 40px rgba(74,127,193,0.8); }
+  @keyframes pulse { 0%,100%{box-shadow:0 0 25px rgba(74,127,193,0.5),0 4px 20px rgba(0,0,0,0.4)} 50%{box-shadow:0 0 45px rgba(74,127,193,0.8),0 4px 30px rgba(0,0,0,0.5)} }
+
+  #accepted {
+    display:none; position:fixed; inset:0; z-index:10002;
+    background:radial-gradient(ellipse at 50% 40%,#071535,var(--deep-navy));
+    flex-direction:column; align-items:center; justify-content:center;
+    padding:40px 20px; text-align:center;
+  }
+  #accepted.show { display:flex; animation:fadeIn 1s ease; }
+  .accepted-emoji { font-size:4rem; margin-bottom:20px; }
+  .accepted-title { font-family:'Dancing Script',cursive; font-size:clamp(2.5rem,9vw,5rem); color:var(--rose); text-shadow:0 0 30px rgba(240,128,160,0.6); margin-bottom:20px; }
+  .accepted-msg { font-style:italic; font-size:clamp(1rem,3vw,1.4rem); color:var(--moonlight); line-height:2; max-width:550px; margin-bottom:8px; }
+  .slide-item {
+    opacity:0;
+    transform:translateY(50px);
+    transition:opacity 0.7s ease, transform 0.7s ease;
+  }
+  .slide-item.show-slide {
+    opacity:1;
+    transform:translateY(0);
+  }
+  .floating-hearts { position:fixed; inset:0; pointer-events:none; z-index:9998; overflow:hidden; }
+  .heart { position:absolute; bottom:-50px; animation:floatUp linear forwards; opacity:0; }
+  @keyframes floatUp { 0%{transform:translateY(0) rotate(0deg);opacity:1} 100%{transform:translateY(-110vh) rotate(360deg);opacity:0} }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+  @keyframes popIn  { from{opacity:0;transform:scale(0)} to{opacity:1;transform:scale(1)} }
+
+  .reveal { opacity:0; transform:translateY(40px); transition:opacity 0.9s ease,transform 0.9s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<canvas id="stars-canvas"></canvas>
+<div class="floating-hearts" id="hearts-container"></div>
+
+<!-- SLIDE 1: Birthday -->
+<section class="section" id="birthday">
+  <div class="moon"></div>
+  <div class="birthday-title">✨ Happy Birthday ✨</div>
+  <div class="princess-name">Moon Princess</div>
+  <div class="birthday-sub">~ You are the moon of my midnight sky ~</div>
+  <div class="birthday-date">June 16, 2008 · A Moon Princess born 🌟</div>
+  <div class="scroll-hint">↓ scroll down for something special ↓</div>
+</section>
+
+<!-- SLIDE 2: Message -->
+<section class="section" id="message">
+  <div class="message-box">
+    <div class="message-icon reveal">🌙</div>
+    <div class="message-heading reveal">To My Moon Princess,</div>
+    <p class="message-para reveal">On this beautiful day, the universe brought the most magical soul into this world — <em>You.</em> Every star in the sky tonight shines a little brighter,  because it's your birthday.</p>
+    <div class="divider reveal"></div>
+    <p class="message-tamil reveal">உன்னோட பிறந்தநாள் உனக்கு  special-ஆன நாள் ithu unnoda 18th birthday la. life eppovo mea happy iru unaku oru surprise iruku ana nee eppadi yaduthu panu theriyala .... 🌙</p>
+    <div class="divider reveal"></div>
+    <p class="message-para reveal">You light up everything around you, just like the moon lights up the darkest night. I am grateful every single day that you exist in this world, in my world.</p>
+    <p class="message-tamil reveal">Happy Ya Iru. உன்னோட சிரிப்பு பார்க்கும்போதெல்லாம் என் மனசு ரொம்ப நிறைஞ்சு போகுது... Happy Birthday Moon Princess! 🎂💙</p>
+  </div>
+<div class="scroll-hint">↓ scroll down for something special ↓</div>
+</section>
+
+<!-- SLIDE 3: Teaser -->
+<section class="section" id="teaser">
+  <div class="teaser-box">
+    <div class="teaser-icon reveal">💌</div>
+    <div class="teaser-title reveal">உன்கிட்ட ஒன்னு சொல்லணும்...</div>
+    <p class="teaser-sub reveal">
+      There's something I've been holding in my heart for a long time.
+      Something I never had the courage to say out loud — until today.
+    </p>
+    <p class="teaser-tamil reveal">
+      ரொம்ப நாளா மனசுல வச்சிருக்கேன்...<br>
+      இன்னிக்கு உன்னோட பிறந்தநாள்ல சொல்லணும்னு தோணுது. 🌙
+    </p>
+    <div class="divider reveal"></div>
+    <p class="teaser-sub reveal" style="color:var(--gold);">Ready-ஆ இருந்தா... ok va touch pannu illa na no va touch panna try pannu  💙</p>
+
+    <div class="btn-row reveal">
+      <button class="btn-yes" onclick="openLetter()">Ok 💙</button>
+    </div>
+    <button id="noBtn"
+      onmouseenter="runAway()"
+      ontouchstart="runAway(); return false;"
+      onclick="runAway()">No 🙈</button>
+
+    <p class="tip-text reveal">* "No" touch panna mudiyathu😏</p>
+  </div>
+</section>
+
+<!-- Letter Overlay -->
+<div id="letterOverlay">
+  <div class="letter-wrap">
+    <div class="letter-moon">🌙</div>
+    <div class="letter-from">A letter from Mukesh · உன்னோட Mukesh கிட்டிருந்து</div>
+    <div class="letter-heading">என் Moon Princess-க்கு... 💙</div>
+    <div class="letter-divider"></div>
+    
+
+<p class="letter-para">
+            
+
+
+இந்த letter எழுதும்போது என் மனசு நிறைய feelings-ஆல நிறைஞ்சிருக்கு... நீ படிக்கும்போது enaku happy irukum , ஆனா சொல்லாம இருக்கவே முடியல.
+    </p>
+    <p class="letter-tamil">
+      உன்னை முதல்ல பார்த்த நாளிலிருந்தே என் உலகமே மாறிப்போச்சு.
+      நீ பேசும்போது, சிரிக்கும்போது, கோபப்படும்போது கூட — என்னோட மனசு உன்னையே பார்த்துக்கிட்டிருக்கு.
+    </p>
+    <div class="letter-divider"></div>
+    <p class="letter-para">
+      I don't know how to explain this feeling in words, but when you're around,
+      everything feels right. Like the moon finally found its sky. 🌙
+    </p>
+    <p class="letter-tamil">
+      உன்னோட ஒரு smile-க்காக நான் எந்த தூரமும் போவேன்,
+      உன்னோட ஒரு நிமிஷத்துக்காக நான் எவ்வளவு நேரமும் காத்திருப்பேன்.
+    </p>
+    <div class="letter-divider"></div>
+    <p class="letter-para">
+      Today, on your birthday, I just want you to know —
+      <em style="color:var(--rose);">you are the most beautiful person in my world.</em>
+      Not just your face, but your heart, your soul, everything about you.
+    </p>
+    <p class="letter-tamil">
+      உன்னோட பிறந்தநாள்ல இந்த ஒரு வார்த்தை மட்டும் சொல்லணும் —<br>
+      <em style="color:var(--rose); font-size:1.2em;">I love you moon princess. 💙</em><br><br>
+      en love aa accept panna na accept button aa touch paanu🌙
+    </p>
+    <div class="letter-divider"></div>
+    <div class="letter-sign">~ Mukesh 🌙</div>
+    <div class="letter-hearts">💙 🌙 ✨ 💙</div>
+    <button class="btn-accept" onclick="acceptLove()">Accept 💙</button>
+  </div>
+</div>
+
+<!-- Accepted Overlay -->
+<div id="accepted">
+  <div class="accepted-emoji slide-item">🌙💙</div>
+  <div class="accepted-title slide-item">She Said Yes! 💙</div>
+  <div class="accepted-lines">
+    <p class="accepted-msg slide-item">இனி என்னோட உலகம் முழுக்க நீயே...</p>
+    <p class="accepted-msg slide-item">You are my Moon Princess, forever and always. 🌙</p>
+    <p class="accepted-msg slide-item">enaku call pannu moon princess
+    <p class="accepted-msg slide-item" style="margin-top:10px;"><em style="color:var(--gold);">— i love you , afiya 💙</em></p>
+  </div>
+</div>
+
+<script>
+// Stars canvas
+const canvas = document.getElementById('stars-canvas');
+const ctx = canvas.getContext('2d');
+let stars = [];
+function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+function initStars() {
+  stars = [];
+  for (let i = 0; i < 220; i++) {
+    stars.push({ x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*1.5+0.3, speed:Math.random()*0.008+0.003, offset:Math.random()*Math.PI*2 });
+  }
+}
+function drawStars(t) {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  stars.forEach(s => {
+    const alpha = 0.4 + 0.6 * Math.abs(Math.sin(t * s.speed + s.offset));
+    ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fillStyle = `rgba(200,216,255,${alpha})`; ctx.fill();
+  });
+  requestAnimationFrame(drawStars);
+}
+resizeCanvas(); initStars();
+window.addEventListener('resize', () => { resizeCanvas(); initStars(); });
+requestAnimationFrame(drawStars);
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+reveals.forEach(el => observer.observe(el));
+
+// No Button — always fixed, never disappears, jumps on hover/touch
+const noBtn = document.getElementById('noBtn');
+
+function placeNoBtnNextToOk() {
+  const okBtn = document.querySelector('.btn-yes');
+  const rect = okBtn.getBoundingClientRect();
+  // On mobile, if No button would go off screen, place it below OK button
+  const noBtnWidth = noBtn.offsetWidth || 140;
+  let left = rect.right + 16;
+  let top  = rect.top;
+  if (left + noBtnWidth > window.innerWidth - 10) {
+    // Place below OK button centered
+    left = rect.left + (rect.width / 2) - (noBtnWidth / 2);
+    top  = rect.bottom + 16;
+  }
+  left = Math.max(10, Math.min(left, window.innerWidth - noBtnWidth - 10));
+  noBtn.style.left = left + 'px';
+  noBtn.style.top  = top + 'px';
+  noBtn.style.opacity = '1';
+}
+
+let isAway = false;
+
+function runAway() {
+  if (isAway) return;
+  isAway = true;
+  const bw = noBtn.offsetWidth + 16;
+  const bh = noBtn.offsetHeight + 16;
+  const curX = parseFloat(noBtn.style.left) || 0;
+  const curY = parseFloat(noBtn.style.top)  || 0;
+  let nx, ny, tries = 0;
+  do {
+    nx = 10 + Math.random() * (window.innerWidth  - bw  - 20);
+    ny = 10 + Math.random() * (window.innerHeight - bh  - 20);
+    tries++;
+  } while (tries < 40 && Math.hypot(nx - curX, ny - curY) < 130);
+  noBtn.style.left = nx + 'px';
+  noBtn.style.top  = ny + 'px';
+  setTimeout(() => {
+    placeNoBtnNextToOk();
+    isAway = false;
+  }, 800);
+}
+
+// Place No button initially, and re-place on scroll/resize until first escape
+let userScrolled = false;
+window.addEventListener('scroll', () => {
+  if (!userScrolled) placeNoBtnNextToOk();
+}, { passive: true });
+window.addEventListener('resize', () => {
+  placeNoBtnNextToOk();
+});
+// Keep nudging into place until teaser section is visible
+const teaserSection = document.getElementById('teaser');
+const teaserObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      placeNoBtnNextToOk();
+      // Once placed correctly, stop re-placing after first runAway
+      noBtn.addEventListener('mouseenter', () => { userScrolled = true; }, { once: true });
+      noBtn.addEventListener('touchstart', () => { userScrolled = true; }, { once: true });
+    }
+  });
+}, { threshold: 0.3 });
+teaserObserver.observe(teaserSection);
+setTimeout(placeNoBtnNextToOk, 800);
+
+// Accept love — slide in words + Telegram notify
+function acceptLove() {
+  // Hide letter overlay, show accepted screen
+  document.getElementById('letterOverlay').style.display = 'none';
+  const acc = document.getElementById('accepted');
+  acc.style.display = 'flex';
+  acc.style.animation = 'fadeIn 1s ease';
+
+  // Hearts
+  for (let i = 0; i < 3; i++) setTimeout(launchHearts, i * 800);
+
+  // Slide in each item one by one (wait for screen to appear first)
+  const items = document.querySelectorAll('#accepted .slide-item');
+  items.forEach((el, i) => {
+    setTimeout(() => el.classList.add('show-slide'), 600 + i * 700);
+  });
+
+  // Telegram notify
+  const token = '8730622050:AAF7J5TUUJrikYtTxwtdIDGtccKtFIpPSyY';
+  const chatId = '7109609667';
+  const msg = encodeURIComponent('💙🌙 She accepted your love Mukesh! Moon Princess said YES! 🌙💙');
+  const telegramUrl = 'https://api.telegram.org/bot' + token + '/sendMessage?chat_id=' + chatId + '&text=' + msg;
+  fetch(telegramUrl, { method: 'GET', mode: 'no-cors' }).catch(() => {});
+}
+
+// Open letter overlay
+function openLetter() {
+  document.getElementById('letterOverlay').classList.add('show');
+  launchHearts();
+  setTimeout(launchHearts, 1200);
+}
+
+// Launch floating hearts
+function launchHearts() {
+  const c = document.getElementById('hearts-container');
+  ['💙','🌙','✨','💫','⭐','💎'].forEach((e, i) => {
+    const h = document.createElement('div');
+    h.className = 'heart';
+    h.textContent = e;
+    h.style.cssText = `left:${Math.random()*100}vw;font-size:${1+Math.random()*1.5}rem;animation-duration:${3+Math.random()*4}s;animation-delay:${i*0.15}s`;
+    c.appendChild(h);
+    setTimeout(() => h.remove(), 8000);
+  });
+}
+</script>
+</body>
+</html>
