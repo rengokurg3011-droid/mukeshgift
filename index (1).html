@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -83,22 +84,23 @@
     display:none; position:fixed; inset:0; z-index:10001;
     background:radial-gradient(ellipse at 50% 30%,#0d0820,#020818);
     flex-direction:column; align-items:center; justify-content:flex-start;
-    padding:60px 20px; overflow-y:auto;
+    padding:20px 12px; overflow-y:auto; -webkit-overflow-scrolling:touch;
   }
   #letterOverlay.show { display:flex; animation:fadeIn 1.2s ease; }
 
   .letter-wrap {
     max-width:660px; width:100%; text-align:center;
-    border:1px solid rgba(200,216,240,0.12); border-radius:20px;
-    background:rgba(10,20,50,0.6); padding:44px 36px;
+    border:1px solid rgba(200,216,240,0.12); border-radius:16px;
+    background:rgba(10,20,50,0.6); padding:28px 20px;
     box-shadow:0 0 60px rgba(122,79,193,0.15),inset 0 0 40px rgba(10,20,60,0.4);
+    box-sizing:border-box;
   }
   .letter-moon { font-size:2.5rem; margin-bottom:16px; animation:moonFloat 5s ease-in-out infinite; }
   .letter-from { font-family:'Cinzel',serif; font-size:0.85rem; letter-spacing:0.3em; color:var(--gold); text-transform:uppercase; margin-bottom:24px; opacity:0.8; }
   .letter-heading { font-family:'Dancing Script',cursive; font-size:clamp(2rem,7vw,3.2rem); color:var(--rose); text-shadow:0 0 20px rgba(240,128,160,0.5); margin-bottom:28px; line-height:1.3; }
   .letter-divider { width:100px; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:24px auto; }
-  .letter-para { font-style:italic; font-size:clamp(1rem,2.5vw,1.15rem); color:var(--moonlight); line-height:2.1; margin-bottom:18px; opacity:0.92; }
-  .letter-tamil { font-size:clamp(0.95rem,2.5vw,1.1rem); color:var(--glow); line-height:2.2; margin-bottom:18px; font-style:italic; opacity:0.9; }
+  .letter-para { font-style:italic; font-size:clamp(0.95rem,4vw,1.15rem); color:var(--moonlight); line-height:1.9; margin-bottom:16px; opacity:0.92; word-break:break-word; }
+  .letter-tamil { font-size:clamp(0.9rem,4vw,1.1rem); color:var(--glow); line-height:2; margin-bottom:16px; font-style:italic; opacity:0.9; word-break:break-word; }
   .letter-sign { font-family:'Dancing Script',cursive; font-size:clamp(1.5rem,5vw,2.2rem); color:var(--gold); margin-top:28px; text-shadow:0 0 15px rgba(240,208,128,0.4); }
   .letter-hearts { font-size:1.4rem; margin-top:14px; letter-spacing:0.3em; }
   .btn-accept {
