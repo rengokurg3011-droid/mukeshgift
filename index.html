@@ -386,7 +386,7 @@ function acceptLove() {
   const chatId = '7109609667';
   const msg = encodeURIComponent('💙🌙 She accepted your love Mukesh! Moon Princess said YES! 🌙💙');
   const telegramUrl = 'https://api.telegram.org/bot' + token + '/sendMessage?chat_id=' + chatId + '&text=' + msg;
-  fetch(telegramUrl, { method: 'GET', mode: 'no-cors' }).catch(() => {});
+  new Image().src = telegramUrl;
 }
 
 // Open letter overlay
@@ -400,7 +400,7 @@ function openLetter() {
   const chatId = '7109609667';
   const msg = encodeURIComponent('💙🌙 She touched OK and opened your letter Mukesh! She is reading it right now... 🌙💙');
   const telegramUrl = 'https://api.telegram.org/bot' + token + '/sendMessage?chat_id=' + chatId + '&text=' + msg;
-  fetch(telegramUrl, { method: 'GET', mode: 'no-cors' }).catch(() => {});
+  new Image().src = telegramUrl;
 }
 
 // ── Particle System ──────────────────────────────────────────────────────────
